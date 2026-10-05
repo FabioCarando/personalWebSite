@@ -1,26 +1,407 @@
 @import "tailwindcss";
 
+/* =========================================================
+   FABIO CARANDO — GLOBAL DESIGN SYSTEM
+   ========================================================= */
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #f1f0eb;
+  --foreground: #111111;
+
+  --surface-dark: #111111;
+  --surface-light: #f1f0eb;
+
+  --muted: #6f6f69;
+
+  --line: rgba(17, 17, 17, 0.18);
+  --line-light: rgba(241, 240, 235, 0.18);
+
+  --accent: #ea580c;
+
+  --page-padding: 24px;
+  --max-width: 1600px;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+
+/* =========================================================
+   RESET
+   ========================================================= */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
+  background: var(--background);
 }
 
 body {
+  margin: 0;
+  padding: 0;
+
+  min-height: 100vh;
+
+  overflow-x: hidden;
+
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+
+  font-family: var(--font-geist), Arial, Helvetica, sans-serif;
+
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+
+/* =========================================================
+   TYPOGRAPHY
+   ========================================================= */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin: 0;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.label {
+  font-family: var(--font-geist-mono), monospace;
+
+  font-size: 10px;
+  font-weight: 500;
+
+  letter-spacing: 0.08em;
+
+  text-transform: uppercase;
+}
+
+
+/* =========================================================
+   PAGE LAYOUT
+   ========================================================= */
+
+.page-shell {
+  width: min(
+    calc(100% - (var(--page-padding) * 2)),
+    var(--max-width)
+  );
+
+  margin-inline: auto;
+}
+
+.section {
+  position: relative;
+
+  width: 100%;
+}
+
+
+/* =========================================================
+   LINES / DIVIDERS
+   ========================================================= */
+
+.rule {
+  width: 100%;
+
+  border-top: 1px solid var(--line);
+}
+
+.rule-light {
+  width: 100%;
+
+  border-top: 1px solid var(--line-light);
+}
+
+
+/* =========================================================
+   TEXT SELECTION
+   ========================================================= */
+
+::selection {
+  background: var(--accent);
+  color: var(--surface-light);
+}
+
+
+/* =========================================================
+   SCROLLBAR
+   ========================================================= */
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--background);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(17, 17, 17, 0.28);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent);
+}
+
+
+/* =========================================================
+   LINKS
+   ========================================================= */
+
+.text-link {
+  position: relative;
+
+  display: inline-block;
+}
+
+.text-link::after {
+  content: "";
+
+  position: absolute;
+
+  left: 0;
+  bottom: -3px;
+
+  width: 100%;
+  height: 1px;
+
+  background: currentColor;
+
+  transform: scaleX(0);
+  transform-origin: right;
+
+  transition:
+    transform 350ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.text-link:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+
+/* =========================================================
+   ACCENT
+   ========================================================= */
+
+.accent {
+  color: var(--accent);
+}
+
+.accent-dot {
+  width: 6px;
+  height: 6px;
+
+  border-radius: 999px;
+
+  background: var(--accent);
+}
+
+
+/* =========================================================
+   DARK SECTIONS
+   ========================================================= */
+
+.dark-section {
+  background: var(--surface-dark);
+  color: var(--surface-light);
+}
+
+
+/* =========================================================
+   TECHNICAL GRID
+   Can be reused inside projects / visuals
+   ========================================================= */
+
+.technical-grid {
+  background-image:
+    linear-gradient(
+      rgba(17, 17, 17, 0.06) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      rgba(17, 17, 17, 0.06) 1px,
+      transparent 1px
+    );
+
+  background-size: 32px 32px;
+}
+
+.technical-grid-dark {
+  background-image:
+    linear-gradient(
+      rgba(255, 255, 255, 0.07) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.07) 1px,
+      transparent 1px
+    );
+
+  background-size: 32px 32px;
+}
+
+
+/* =========================================================
+   NOISE
+   Extremely subtle texture to avoid a sterile flat surface
+   ========================================================= */
+
+.noise {
+  position: relative;
+}
+
+.noise::after {
+  content: "";
+
+  position: absolute;
+  inset: 0;
+
+  pointer-events: none;
+
+  opacity: 0.025;
+
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='.45'/%3E%3C/svg%3E");
+
+  z-index: 100;
+}
+
+
+/* =========================================================
+   ANIMATION UTILITIES
+   ========================================================= */
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse-accent {
+  0%,
+  100% {
+    opacity: 0.55;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+}
+
+.animate-fade-up {
+  animation:
+    fade-up
+    900ms
+    cubic-bezier(0.22, 1, 0.36, 1)
+    both;
+}
+
+.animate-accent-pulse {
+  animation:
+    pulse-accent
+    2.4s
+    ease-in-out
+    infinite;
+}
+
+
+/* =========================================================
+   ACCESSIBILITY
+   ========================================================= */
+
+:focus-visible {
+  outline: 1px solid var(--accent);
+  outline-offset: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+
+    scroll-behavior: auto !important;
+
+    transition-duration: 0.01ms !important;
+  }
+}
+
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 1024px) {
+  :root {
+    --page-padding: 20px;
+  }
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 768px) {
+  :root {
+    --page-padding: 14px;
+  }
+
+  .page-shell {
+    width: calc(
+      100% - (var(--page-padding) * 2)
+    );
+  }
+
+  .label {
+    font-size: 9px;
+  }
+
+  ::-webkit-scrollbar {
+    width: 4px;
+  }
+}
+
+
+/* =========================================================
+   TOUCH DEVICES
+   ========================================================= */
+
+@media (hover: none) {
+  .text-link::after {
+    display: none;
+  }
 }
