@@ -77,17 +77,37 @@ export default function SelectedWork() {
                     href={`/projects/${project.slug}`}
                     className="relative block aspect-[4/3] overflow-hidden border border-white/20 bg-white/[0.035]"
                   >
-                    {/* Technical grid */}
-                    <div
-                      className="absolute inset-0 opacity-20"
-                      style={{
-                        backgroundImage: `
-                          linear-gradient(rgba(255,255,255,.15) 1px, transparent 1px),
-                          linear-gradient(90deg, rgba(255,255,255,.15) 1px, transparent 1px)
-                        `,
-                        backgroundSize: "32px 32px",
-                      }}
-                    />
+                    {project.video ? (
+                      <video
+                        src={project.video}
+                        className="absolute inset-0 h-full w-full object-contain"
+                        autoPlay
+                        muted
+                        loop
+                        playsInline
+                      />
+                    ) : (
+                      <>
+                        {/* Technical grid */}
+                        <div
+                          className="absolute inset-0 opacity-20"
+                          style={{
+                            backgroundImage: `
+                              linear-gradient(rgba(255,255,255,.15) 1px, transparent 1px),
+                              linear-gradient(90deg, rgba(255,255,255,.15) 1px, transparent 1px)
+                            `,
+                            backgroundSize: "32px 32px",
+                          }}
+                        />
+
+                        {/* Temporary central visual */}
+                        <div className="absolute inset-0 flex items-center justify-center">
+                          <span className="text-[clamp(3rem,7vw,7rem)] font-medium tracking-[-0.08em] text-white/[0.06]">
+                            {project.number}
+                          </span>
+                        </div>
+                      </>
+                    )}
 
                     <div className="absolute left-5 top-5 font-mono text-[9px] uppercase tracking-[0.12em] text-white/35">
                       Project / {project.number}
@@ -111,13 +131,6 @@ export default function SelectedWork() {
 
                     <div className="absolute bottom-5 right-5 text-2xl transition-transform duration-500 group-hover:translate-x-1">
                       ↗
-                    </div>
-
-                    {/* Temporary central visual */}
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <span className="text-[clamp(3rem,7vw,7rem)] font-medium tracking-[-0.08em] text-white/[0.06]">
-                        {project.number}
-                      </span>
                     </div>
                   </Link>
                 </div>

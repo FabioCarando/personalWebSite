@@ -8,6 +8,7 @@ export type Project = {
   year: string;
   location?: string;
   tech: string[];
+  video?: string;
 };
 
 export const projects: Project[] = [
@@ -22,6 +23,7 @@ export const projects: Project[] = [
     year: "2026",
     location: "Hong Kong",
     tech: ["Python", "LLMs", "Streamlit", "AWS"],
+    video: "/2026-10-05 15-44-30.mkv",
   },
   {
     number: "02",

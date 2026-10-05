@@ -1,7 +1,7 @@
 "use client";
 
-import Image from "next/image";
 import { useEffect, useState } from "react";
+import SupplyChainNetwork from "./SupplyChainNetwork";
 
 export default function Now() {
   const [hongKongTime, setHongKongTime] = useState("--:--");
@@ -19,9 +19,7 @@ export default function Now() {
     };
 
     updateTime();
-
     const interval = setInterval(updateTime, 1000);
-
     return () => clearInterval(interval);
   }, []);
 
@@ -31,11 +29,7 @@ export default function Now() {
       className="relative bg-[#d9d8d2] text-[#111111]"
     >
       <div className="page-shell">
-
-        {/* ======================================================
-            SECTION HEADER
-        ====================================================== */}
-
+        {/* Header */}
         <div className="grid grid-cols-2 border-b border-black/20 py-5 md:grid-cols-12">
           <div className="md:col-span-3">
             <span className="font-mono text-[9px] uppercase tracking-[0.15em] text-orange-600">
@@ -52,340 +46,221 @@ export default function Now() {
           </div>
         </div>
 
-        {/* ======================================================
-            HERO TITLE
-        ====================================================== */}
-
-        <div className="grid grid-cols-1 items-end py-14 md:grid-cols-12 md:py-20">
-
+        {/* Title section */}
+        <div className="grid grid-cols-1 items-end py-14 md:grid-cols-12 md:py-20 border-b border-black/20">
           <div className="md:col-span-3">
             <div className="font-mono text-[9px] uppercase tracking-[0.15em] text-black/40">
-              Based in
+              Expertise
             </div>
           </div>
 
           <div className="mt-5 md:col-span-9 md:mt-0">
-            <div className="flex items-start">
-              <h2
-                className="
-                  text-[clamp(4rem,9vw,9.5rem)]
-                  font-medium
-                  leading-[0.78]
-                  tracking-[-0.075em]
-                "
-              >
-                HONG KONG
-              </h2>
-
-              <span
-                className="
-                  ml-4
-                  mt-2
-                  h-[10px]
-                  w-[10px]
-                  shrink-0
-                  rounded-full
-                  bg-orange-600
-                  md:ml-6
-                  md:mt-3
-                "
-              />
-            </div>
+            <h2 className="text-[clamp(4rem,8vw,9rem)] font-medium leading-[0.82] tracking-[-0.07em]">
+              PROJECT
+              <br />
+              EXPERIENCES
+            </h2>
           </div>
         </div>
 
-        {/* ======================================================
-            MAP
-        ====================================================== */}
-
-        <div className="border-t border-black/20 pt-6">
-          <div className="mb-4 flex items-center justify-between">
-            <div className="font-mono text-[8px] uppercase tracking-[0.14em] text-black/35">
-              Hong Kong SAR
+        {/* Sectors & Projects */}
+        <div className="py-12 md:py-16 border-t border-black/20">
+          <div className="mb-8 md:mb-12">
+            <div className="font-mono text-[8px] uppercase tracking-[0.14em] text-black/35 mb-6">
+              Industries & Expertise
             </div>
 
-            <div className="font-mono text-[8px] uppercase tracking-[0.14em] text-black/35">
-              Current position
-            </div>
-          </div>
-
-          <div
-            className="
-              relative
-              h-[55vh]
-              min-h-[430px]
-              max-h-[680px]
-              w-full
-              overflow-hidden
-              border
-              border-black/15
-              bg-[#cfcec8]
-            "
-          >
-            <Image
-              src="/images/hong-kong-map.png"
-              alt="Map of Hong Kong"
-              fill
-              priority
-              sizes="100vw"
-              className="object-cover object-center"
-            />
-
-            {/* Small editorial marker */}
-
-            <div
-              className="
-                pointer-events-none
-                absolute
-                bottom-5
-                left-5
-                bg-[#111111]
-                px-4
-                py-3
-                text-[#f1f0eb]
-              "
-            >
-              <div className="flex items-center gap-2">
-                <span className="h-[5px] w-[5px] rounded-full bg-orange-600" />
-
-                <span className="font-mono text-[8px] uppercase tracking-[0.14em] text-white/55">
-                  Currently
-                </span>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
+              {/* Energy Sector */}
+              <div>
+                <div className="font-mono text-[9px] uppercase tracking-[0.15em] text-orange-600 mb-3">
+                  Energy
+                </div>
+                <h3 className="text-xl font-medium tracking-[-0.03em] mb-3">
+                  Power & Utilities
+                </h3>
+                <p className="text-sm text-black/60 leading-relaxed">
+                  Demand forecasting, grid optimization, and energy distribution systems. Real-time analytics for renewable energy sources.
+                </p>
               </div>
 
-              <div className="mt-2 font-mono text-[10px] uppercase tracking-[0.08em]">
-                Hong Kong
+              {/* Financial Sector */}
+              <div>
+                <div className="font-mono text-[9px] uppercase tracking-[0.15em] text-orange-600 mb-3">
+                  Finance
+                </div>
+                <h3 className="text-xl font-medium tracking-[-0.03em] mb-3">
+                  Banking & Fintech
+                </h3>
+                <p className="text-sm text-black/60 leading-relaxed">
+                  Risk assessment, fraud detection, and transaction analysis. AI-driven trading signals and portfolio optimization.
+                </p>
+              </div>
+
+              {/* Supply Chain Sector */}
+              <div>
+                <div className="font-mono text-[9px] uppercase tracking-[0.15em] text-orange-600 mb-3">
+                  Operations
+                </div>
+                <h3 className="text-xl font-medium tracking-[-0.03em] mb-3">
+                  Supply Chain & Logistics
+                </h3>
+                <p className="text-sm text-black/60 leading-relaxed">
+                  End-to-end visibility, demand planning, inventory optimization. Predictive logistics and route optimization.
+                </p>
+              </div>
+
+              {/* Agriculture Sector */}
+              <div>
+                <div className="font-mono text-[9px] uppercase tracking-[0.15em] text-orange-600 mb-3">
+                  Agriculture
+                </div>
+                <h3 className="text-xl font-medium tracking-[-0.03em] mb-3">
+                  AgTech & Farming
+                </h3>
+                <p className="text-sm text-black/60 leading-relaxed">
+                  Crop yield prediction, precision farming analytics, market price forecasting for farmers and agricultural enterprises.
+                </p>
               </div>
             </div>
           </div>
         </div>
 
-        {/* ======================================================
-            INFORMATION GRID
-        ====================================================== */}
-
-        <div className="mt-6 grid grid-cols-1 border-y border-black/20 md:grid-cols-12">
-
-          {/* LOCATION */}
-
-          <InfoBlock className="md:col-span-3 md:border-r md:border-black/20">
-            <MetaLabel>Location</MetaLabel>
-
-            <div className="mt-5 text-[1.35rem] leading-[1.05] tracking-[-0.035em]">
-              Hong Kong
-              <br />
-              SAR
+        {/* Info grid */}
+        <div className="grid grid-cols-1 border-t border-black/20 md:grid-cols-12">
+          {/* Scope info */}
+          <div className="md:col-span-3 md:border-r md:border-black/20 py-8 md:py-10">
+            <div className="font-mono text-[8px] uppercase tracking-[0.15em] text-black/35 mb-5">
+              Coverage
             </div>
 
-            <div className="mt-5 font-mono text-[8px] uppercase leading-4 tracking-[0.12em] text-black/35">
-              22.2819° N
+            <div className="text-[1.35rem] leading-[1.05] tracking-[-0.035em] mb-5">
+              End-to-End
               <br />
-              114.1582° E
+              Operations
             </div>
-          </InfoBlock>
 
-          {/* CURRENTLY */}
+            <div className="font-mono text-[8px] uppercase leading-4 tracking-[0.12em] text-black/35">
+              Source to
+              <br />
+              Consumer
+            </div>
+          </div>
 
-          <InfoBlock className="md:col-span-5 md:border-r md:border-black/20">
-            <MetaLabel>Currently</MetaLabel>
+          {/* Focus areas */}
+          <div className="md:col-span-5 md:border-r md:border-black/20 py-8 md:py-10 md:px-8">
+            <div className="font-mono text-[8px] uppercase tracking-[0.15em] text-black/35 mb-5">
+              Key Areas
+            </div>
 
-            <p
-              className="
-                mt-5
-                max-w-[480px]
-                text-[clamp(1.5rem,2.4vw,2.5rem)]
-                leading-[1.04]
-                tracking-[-0.045em]
-              "
-            >
-              Working with Data & AI.
+            <p className="text-[clamp(1.4rem,2.2vw,2rem)] leading-[1.05] tracking-[-0.04em]">
+              Demand planning & forecasting.
               <br />
-              Building products.
+              Logistics optimization.
               <br />
-              Playing jazz.
+              AI-driven inventory.
               <br />
-              Exploring Asia.
+              Real-time visibility.
             </p>
-          </InfoBlock>
+          </div>
 
-          {/* TIME */}
-
-          <InfoBlock className="md:col-span-4">
-            <div className="flex items-center gap-2">
-              <span className="h-[5px] w-[5px] rounded-full bg-orange-600" />
-
-              <MetaLabel>Local time</MetaLabel>
+          {/* Active nodes info */}
+          <div className="md:col-span-4 py-8 md:py-10 md:px-8">
+            <div className="flex items-center gap-2 mb-5">
+              <span className="h-[5px] w-[5px] rounded-full bg-orange-600 animate-pulse" />
+              <div className="font-mono text-[8px] uppercase tracking-[0.15em] text-black/35">
+                Network status
+              </div>
             </div>
 
-            <div
-              className="
-                mt-4
-                text-[clamp(3rem,5vw,5.5rem)]
-                leading-none
-                tracking-[-0.065em]
-              "
-            >
-              {hongKongTime}
+            <div className="text-[clamp(2.5rem,4vw,4rem)] leading-none tracking-[-0.065em] mb-4">
+              28
             </div>
 
-            <div className="mt-3 font-mono text-[8px] uppercase tracking-[0.14em] text-black/35">
-              HKT / UTC +08
+            <div className="font-mono text-[8px] uppercase tracking-[0.14em] text-black/35">
+              Active nodes • 100 particles
             </div>
-          </InfoBlock>
+          </div>
         </div>
 
-        {/* ======================================================
-            JOURNEY
-        ====================================================== */}
-
-        <div className="py-16 md:py-20">
-          <div className="grid grid-cols-1 md:grid-cols-12">
-
+        {/* Approach & Methodology */}
+        <div className="py-16 md:py-20 border-t border-black/20">
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-8">
             <div className="md:col-span-3">
-              <MetaLabel>Journey</MetaLabel>
+              <div className="font-mono text-[8px] uppercase tracking-[0.15em] text-black/35">
+                Methodology
+              </div>
             </div>
 
-            <div className="mt-8 md:col-span-9 md:mt-0">
-              <Journey />
-            </div>
+            <div className="md:col-span-9">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div>
+                  <div className="text-lg font-medium tracking-[-0.03em] mb-3 text-orange-600">
+                    Data-Driven
+                  </div>
+                  <p className="text-sm text-black/60 leading-relaxed">
+                    Building solutions grounded in real data, statistical rigor, and validated assumptions across all industries.
+                  </p>
+                </div>
 
+                <div>
+                  <div className="text-lg font-medium tracking-[-0.03em] mb-3 text-orange-600">
+                    Scalable Systems
+                  </div>
+                  <p className="text-sm text-black/60 leading-relaxed">
+                    Engineering platforms that grow from pilot to enterprise deployment without losing performance or reliability.
+                  </p>
+                </div>
+
+                <div>
+                  <div className="text-lg font-medium tracking-[-0.03em] mb-3 text-orange-600">
+                    Domain Expertise
+                  </div>
+                  <p className="text-sm text-black/60 leading-relaxed">
+                    Deep understanding of energy markets, financial systems, supply chains, and agricultural cycles.
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
-        {/* ======================================================
-            FOOTER META
-        ====================================================== */}
+        {/* Project Results */}
+        <div className="border-t border-black/20 py-8 md:py-10">
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-8">
+            <div>
+              <div className="text-2xl font-medium tracking-[-0.05em] text-orange-600 mb-2">
+                4+
+              </div>
+              <div className="font-mono text-[8px] uppercase tracking-[0.12em] text-black/35">
+                Industry Sectors
+              </div>
+            </div>
 
-        <div className="grid grid-cols-2 border-t border-black/20 py-5 md:grid-cols-12">
+            <div>
+              <div className="text-2xl font-medium tracking-[-0.05em] text-orange-600 mb-2">
+                7
+              </div>
+              <div className="font-mono text-[8px] uppercase tracking-[0.12em] text-black/35">
+                Client Projects
+              </div>
+            </div>
 
-          <div className="font-mono text-[8px] uppercase tracking-[0.12em] text-black/35 md:col-span-3">
-            Cremona / Italy
+            <div>
+              <div className="text-2xl font-medium tracking-[-0.05em] text-orange-600 mb-2">
+                $320k
+              </div>
+              <div className="font-mono text-[8px] uppercase tracking-[0.12em] text-black/35">
+                Value Delivered
+              </div>
+            </div>
           </div>
-
-          <div className="hidden font-mono text-[8px] uppercase tracking-[0.12em] text-black/35 md:col-span-5 md:block">
-            Data / AI / Building / Music
-          </div>
-
-          <div className="text-right font-mono text-[8px] uppercase tracking-[0.12em] text-black/35 md:col-span-4">
-            Hong Kong / Asia
-          </div>
-
         </div>
       </div>
     </section>
   );
 }
 
-/* =========================================================
-   INFO BLOCK
-========================================================= */
-
-function InfoBlock({
-  children,
-  className = "",
-}: {
-  children: React.ReactNode;
-  className?: string;
-}) {
-  return (
-    <div
-      className={`
-        border-b
-        border-black/20
-        py-8
-        md:border-b-0
-        md:px-8
-        md:py-10
-        first:md:pl-0
-        ${className}
-      `}
-    >
-      {children}
-    </div>
-  );
-}
-
-/* =========================================================
-   META LABEL
-========================================================= */
-
-function MetaLabel({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
-  return (
-    <div className="font-mono text-[8px] uppercase tracking-[0.15em] text-black/35">
-      {children}
-    </div>
-  );
-}
-
-/* =========================================================
-   JOURNEY
-========================================================= */
-
-function Journey() {
-  return (
-    <div className="relative">
-
-      {/* Base line */}
-
-      <div className="absolute left-0 right-0 top-[7px] h-px bg-black/20" />
-
-      {/* Nodes */}
-
-      <div className="relative grid grid-cols-3">
-
-        {/* CREMONA */}
-
-        <JourneyPoint
-          title="Cremona"
-          subtitle="Origin"
-        />
-
-        {/* MILANO */}
-
-        <JourneyPoint
-          title="Milano"
-          subtitle="Study / Work"
-          centered
-        />
-
-        {/* HONG KONG */}
-
-        <div className="text-right">
-          <div
-            className="
-              relative
-              z-10
-              ml-auto
-              h-[15px]
-              w-[15px]
-              rounded-full
-              bg-orange-600
-            "
-          >
-            <div className="absolute -inset-[6px] rounded-full border border-orange-600/25" />
-          </div>
-
-          <div className="mt-5 text-lg tracking-[-0.035em]">
-            Hong Kong
-          </div>
-
-          <div className="mt-1 font-mono text-[8px] uppercase tracking-[0.12em] text-orange-600">
-            Current / 2026
-          </div>
-        </div>
-
-      </div>
-    </div>
-  );
-}
-
-/* =========================================================
-   JOURNEY POINT
-========================================================= */
 
 function JourneyPoint({
   title,
@@ -398,7 +273,6 @@ function JourneyPoint({
 }) {
   return (
     <div className={centered ? "text-center" : ""}>
-
       <div
         className={`
           relative
@@ -412,19 +286,7 @@ function JourneyPoint({
           ${centered ? "mx-auto" : ""}
         `}
       >
-        <div
-          className="
-            absolute
-            left-1/2
-            top-1/2
-            h-[3px]
-            w-[3px]
-            -translate-x-1/2
-            -translate-y-1/2
-            rounded-full
-            bg-black
-          "
-        />
+        <div className="absolute left-1/2 top-1/2 h-[3px] w-[3px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-black" />
       </div>
 
       <div className="mt-5 text-lg tracking-[-0.035em]">
@@ -434,7 +296,30 @@ function JourneyPoint({
       <div className="mt-1 font-mono text-[8px] uppercase tracking-[0.12em] text-black/35">
         {subtitle}
       </div>
+    </div>
+  );
+}
 
+function JourneyPointActive({
+  title,
+  subtitle,
+}: {
+  title: string;
+  subtitle: string;
+}) {
+  return (
+    <div className="text-right">
+      <div className="relative z-10 ml-auto h-[15px] w-[15px] rounded-full bg-orange-600">
+        <div className="absolute -inset-[6px] rounded-full border border-orange-600/25" />
+      </div>
+
+      <div className="mt-5 text-lg tracking-[-0.035em]">
+        {title}
+      </div>
+
+      <div className="mt-1 font-mono text-[8px] uppercase tracking-[0.12em] text-orange-600">
+        {subtitle}
+      </div>
     </div>
   );
 }
