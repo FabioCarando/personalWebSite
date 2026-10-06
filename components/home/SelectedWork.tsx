@@ -1,6 +1,7 @@
 ﻿import Image from "next/image";
 
 import { projects, type Project } from "@/content/projects";
+import DemoVideo from "./DemoVideo";
 
 export default function SelectedWork() {
   return (
@@ -10,7 +11,7 @@ export default function SelectedWork() {
     >
       <div className="page-shell">
         {/* Section intro */}
-        <div className="grid min-h-[55vh] grid-cols-1 items-end border-b border-white/20 pb-12 pt-28 md:grid-cols-12">
+        <div className="grid grid-cols-1 items-end gap-8 border-b border-white/20 pb-12 pt-16 md:min-h-[55vh] md:grid-cols-12 md:gap-0 md:pt-28">
           <div className="md:col-span-3">
             <div className="font-mono text-[10px] uppercase tracking-[0.14em] text-orange-500">
               01 / Selected work
@@ -18,7 +19,7 @@ export default function SelectedWork() {
           </div>
 
           <div className="mt-16 md:col-span-9 md:mt-0">
-            <h2 className="max-w-[1050px] text-[clamp(4rem,8vw,9rem)] font-medium leading-[0.82] tracking-[-0.07em]">
+            <h2 className="max-w-[1050px] text-[clamp(3rem,12vw,5rem)] font-medium leading-[0.9] tracking-[-0.07em] md:text-[clamp(4rem,8vw,9rem)] md:leading-[0.82]">
               THINGS
               <br />
               I&apos;VE BUILT.
@@ -47,7 +48,7 @@ export default function SelectedWork() {
                     {project.eyebrow}
                   </div>
 
-                  <h3 className={`${project.research ? "text-[clamp(2.4rem,4vw,4.8rem)] leading-[1]" : "text-[clamp(2.8rem,5vw,6rem)] leading-[0.88]"} font-medium tracking-[-0.06em] transition-transform duration-500 group-hover:translate-x-2`}>
+                  <h3 className={`${project.research ? "text-[clamp(1.8rem,7vw,2.8rem)] leading-[1.08] md:text-[clamp(2.4rem,4vw,4.8rem)] md:leading-[1]" : "text-[clamp(1.8rem,7vw,3rem)] leading-[1.05] md:text-[clamp(2.8rem,5vw,6rem)] md:leading-[0.88]"} font-medium tracking-[-0.06em] transition-transform duration-500 motion-safe:md:group-hover:translate-x-2`}>
                     {project.title}
                   </h3>
 
@@ -154,20 +155,9 @@ function ProjectVideo({ project }: { project: Project }) {
   return (
     <div className="relative aspect-[4/3] overflow-hidden border border-white/20 bg-white/[0.035]">
       <div className="absolute left-5 right-5 top-5 flex justify-between gap-3 font-mono text-[9px] uppercase tracking-wider text-white/50"><span>Project / {project.number}</span><span>{project.year}</span></div>
-      <video
-        aria-label={`${project.title} demo`}
-        poster={project.videoPoster}
-        className="absolute inset-x-3 bottom-20 top-12 h-[calc(100%-8rem)] w-[calc(100%-1.5rem)] object-contain sm:inset-x-5 sm:w-[calc(100%-2.5rem)]"
-        controls
-        autoPlay
-        muted
-        loop
-        playsInline
-        preload="metadata"
-      >
-        <source src={project.video} type="video/mp4" />
-        Your browser cannot play this video. Use the link below to open the demo.
-      </video>
+      <div className="absolute inset-x-3 bottom-20 top-12 sm:inset-x-5">
+        <DemoVideo src={project.video!} poster={project.videoPoster} title={project.title} />
+      </div>
       <div className="absolute bottom-5 left-5 right-5 flex items-end justify-between gap-4">
         <span className="font-mono text-[9px] uppercase text-white/50">{project.location}</span>
         <a href={project.video} target="_blank" rel="noopener noreferrer" className="font-mono text-[10px] uppercase tracking-wider text-white/80 hover:text-orange-400">Open video &nearr;</a>

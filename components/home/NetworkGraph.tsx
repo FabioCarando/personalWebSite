@@ -191,6 +191,11 @@ export default function NetworkGraph() {
     let width = 0;
     let height = 0;
     let animationFrame = 0;
+    let visible = true;
+    let lastDraw = 0;
+    const motion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const observer = new IntersectionObserver(([entry]) => { visible = entry.isIntersecting; });
+    observer.observe(canvas);
 
     let backgroundNodes: { x: number; y: number }[] = [];
 
@@ -214,7 +219,7 @@ export default function NetworkGraph() {
       width = rect.width;
       height = rect.height;
 
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const dpr = Math.min(window.devicePixelRatio || 1, width < 768 ? 1.5 : 2);
 
       canvas.width = width * dpr;
       canvas.height = height * dpr;
@@ -227,7 +232,7 @@ export default function NetworkGraph() {
     const createBackground = () => {
       backgroundNodes = [];
 
-      for (let i = 0; i < 165; i++) {
+      for (let i = 0; i < (width < 768 ? 65 : 165); i++) {
         backgroundNodes.push({
           x: 0.31 + Math.random() * 0.66,
           y: 0.05 + Math.random() * 0.9,
@@ -236,7 +241,7 @@ export default function NetworkGraph() {
 
       particles = [];
 
-      for (let i = 0; i < 38; i++) {
+      for (let i = 0; i < (width < 768 ? 18 : 38); i++) {
         particles.push({
           connectionIndex: Math.floor(
             Math.random() * connections.length
@@ -517,7 +522,7 @@ export default function NetworkGraph() {
 
         ctx.fillText(
           node.label,
-          point.x + baseRadius + 10,
+          Math.max(4, Math.min(point.x + baseRadius + 10, width - ctx.measureText(node.label).width - 4)),
           point.y - 8
         );
       });
@@ -633,15 +638,20 @@ export default function NetworkGraph() {
     };
 
     const draw = (time: number) => {
+      if (!visible || document.hidden || (width < 768 && time - lastDraw < 1000 / 30)) {
+        animationFrame = requestAnimationFrame(draw);
+        return;
+      }
+      lastDraw = time;
       ctx.clearRect(0, 0, width, height);
 
       drawBackground();
 
       connections.forEach(drawConnection);
 
-      drawParticles();
+      if (!motion.matches) drawParticles();
 
-      drawNodes(time);
+      drawNodes(motion.matches ? 0 : time);
 
       animationFrame =
         requestAnimationFrame(draw);
@@ -707,6 +717,7 @@ export default function NetworkGraph() {
     );
 
     return () => {
+      observer.disconnect();
       cancelAnimationFrame(
         animationFrame
       );

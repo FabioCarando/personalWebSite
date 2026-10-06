@@ -20,12 +20,12 @@ export default function NeuralScene({ graph, mode, source, paused, onSelect }: {
     if (!canvas) return;
     const context = canvas.getContext("2d");
     if (!context) return;
-    let width = 1, height = 1, frame = 0, last = 0, visible = false;
+    let width = 1, height = 1, frame = 0, last = 0, lastDraw = 0, visible = false;
     const motion = window.matchMedia("(prefers-reduced-motion: reduce)");
     const resize = new ResizeObserver(([entry]) => {
       width = entry.contentRect.width;
       height = entry.contentRect.height;
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const dpr = Math.min(window.devicePixelRatio || 1, width < 768 ? 1.5 : 2);
       canvas.width = Math.round(width * dpr);
       canvas.height = Math.round(height * dpr);
       context.setTransform(dpr, 0, 0, dpr, 0, 0);
@@ -106,7 +106,7 @@ export default function NeuralScene({ graph, mode, source, paused, onSelect }: {
     const tick = (now: number) => {
       if (visible && !document.hidden) {
         if (!paused && !motion.matches) time.current += Math.min((now - (last || now)) / 1000, 0.05);
-        draw();
+        if (width >= 768 || now - lastDraw >= 1000 / 30) { draw(); lastDraw = now; }
       }
       last = now;
       frame = requestAnimationFrame(tick);

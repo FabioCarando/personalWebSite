@@ -47,7 +47,7 @@ export default function Now() {
         </div>
 
         {/* Title section */}
-        <div className="grid grid-cols-1 items-end py-14 md:grid-cols-12 md:py-20 border-b border-black/20">
+        <div className="grid grid-cols-1 items-end gap-6 py-14 md:grid-cols-12 md:gap-0 md:py-20 border-b border-black/20">
           <div className="md:col-span-3">
             <div className="font-mono text-[9px] uppercase tracking-[0.15em] text-black/40">
               Expertise
@@ -55,7 +55,7 @@ export default function Now() {
           </div>
 
           <div className="mt-5 md:col-span-9 md:mt-0">
-            <h2 className="text-[clamp(4rem,8vw,9rem)] font-medium leading-[0.82] tracking-[-0.07em]">
+            <h2 className="text-[clamp(2.2rem,9vw,4rem)] font-medium leading-[0.95] tracking-[-0.07em] md:text-[clamp(4rem,8vw,9rem)] md:leading-[0.82]">
               PROJECT
               <br />
               EXPERIENCES
