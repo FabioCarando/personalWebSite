@@ -118,7 +118,7 @@ export const projects: Project[] = [
   {
     number: "06",
     slug: "monteromola",
-    title: "SAS per aziende agricole e cantine",
+    title: "SAS for farms and wineries",
     eyebrow: "AGRITECH / FULL STACK",
     tagline: "Sales, inventory and reporting in one place.",
     description:
