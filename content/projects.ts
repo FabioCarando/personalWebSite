@@ -9,6 +9,7 @@ export type Project = {
   location?: string;
   tech: string[];
   video?: string;
+  videoPoster?: string;
   image?: { src: string; alt: string; concept?: boolean };
   research?: {
     title: string;
@@ -80,7 +81,8 @@ export const projects: Project[] = [
     year: "2026",
     location: "Hong Kong",
     tech: ["Python", "LLMs", "Streamlit", "AWS"],
-    video: "/2026-10-05 15-44-30.mkv",
+    video: "/trace-demo.mp4",
+    videoPoster: "/trace-demo-poster.jpg",
   },
   {
     number: "04",

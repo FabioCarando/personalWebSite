@@ -74,7 +74,7 @@ export default function SelectedWork() {
 
                 {/* Visual placeholder */}
                 <div className="md:col-span-5">
-                  {project.research ? <ResearchPreview project={project} /> : <Link
+                  {project.research ? <ResearchPreview project={project} /> : project.video ? <ProjectVideo project={project} /> : <Link
                     href={`/projects/${project.slug}`}
                     className="relative block aspect-[4/3] overflow-hidden border border-white/20 bg-white/[0.035]"
                   >
@@ -88,15 +88,6 @@ export default function SelectedWork() {
                           className="object-contain transition-transform duration-500 motion-safe:group-hover:scale-[1.02]"
                         />
                       </div>
-                    ) : project.video ? (
-                      <video
-                        src={project.video}
-                        className="absolute inset-0 h-full w-full object-contain"
-                        autoPlay
-                        muted
-                        loop
-                        playsInline
-                      />
                     ) : (
                       <>
                         {/* Technical grid */}
@@ -164,6 +155,32 @@ export default function SelectedWork() {
         </div>
       </div>
     </section>
+  );
+}
+
+function ProjectVideo({ project }: { project: Project }) {
+  return (
+    <div className="relative aspect-[4/3] overflow-hidden border border-white/20 bg-white/[0.035]">
+      <div className="absolute left-5 right-5 top-5 flex justify-between gap-3 font-mono text-[9px] uppercase tracking-wider text-white/50"><span>Project / {project.number}</span><span>{project.year}</span></div>
+      <video
+        aria-label={`${project.title} demo`}
+        poster={project.videoPoster}
+        className="absolute inset-x-3 bottom-20 top-12 h-[calc(100%-8rem)] w-[calc(100%-1.5rem)] object-contain sm:inset-x-5 sm:w-[calc(100%-2.5rem)]"
+        controls
+        autoPlay
+        muted
+        loop
+        playsInline
+        preload="metadata"
+      >
+        <source src={project.video} type="video/mp4" />
+        Your browser cannot play this video. Use the link below to open the demo.
+      </video>
+      <div className="absolute bottom-5 left-5 right-5 flex items-end justify-between gap-4">
+        <span className="font-mono text-[9px] uppercase text-white/50">{project.location}</span>
+        <a href={project.video} target="_blank" rel="noopener noreferrer" className="font-mono text-[10px] uppercase tracking-wider text-white/80 hover:text-orange-400">Open video &nearr;</a>
+      </div>
+    </div>
   );
 }
 
