@@ -1,5 +1,4 @@
 ﻿import Image from "next/image";
-import Link from "next/link";
 
 import { projects, type Project } from "@/content/projects";
 
@@ -74,8 +73,7 @@ export default function SelectedWork() {
 
                 {/* Visual placeholder */}
                 <div className="md:col-span-5">
-                  {project.research ? <ResearchPreview project={project} /> : project.video ? <ProjectVideo project={project} /> : <Link
-                    href={`/projects/${project.slug}`}
+                  {project.research ? <ResearchPreview project={project} /> : project.video ? <ProjectVideo project={project} /> : <div
                     className="relative block aspect-[4/3] overflow-hidden border border-white/20 bg-white/[0.035]"
                   >
                     {project.image ? (
@@ -126,15 +124,9 @@ export default function SelectedWork() {
                         </div>
                       )}
 
-                      <div className="font-mono text-[10px] uppercase">
-                        View case study
-                      </div>
                     </div>
 
-                    <div className="absolute bottom-5 right-5 text-2xl transition-transform duration-500 group-hover:translate-x-1">
-                      ↗
-                    </div>
-                  </Link>}
+                  </div>}
                 </div>
               </div>
             </article>
