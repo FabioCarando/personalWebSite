@@ -1,6 +1,7 @@
+import Image from "next/image";
 import Link from "next/link";
 
-import { projects } from "@/content/projects";
+import { projects, type Project } from "@/content/projects";
 
 export default function SelectedWork() {
   return (
@@ -42,24 +43,24 @@ export default function SelectedWork() {
                 </div>
 
                 {/* Main project info */}
-                <div className="md:col-span-6">
+                <div className="flex flex-col gap-6 md:col-span-6">
                   <div className="font-mono text-[9px] uppercase tracking-[0.14em] text-orange-500">
                     {project.eyebrow}
                   </div>
 
-                  <h3 className="mt-4 text-[clamp(2.8rem,5vw,6rem)] font-medium leading-[0.88] tracking-[-0.06em] transition-transform duration-500 group-hover:translate-x-2">
+                  <h3 className={`${project.research ? "text-[clamp(2.4rem,4vw,4.8rem)] leading-[1]" : "text-[clamp(2.8rem,5vw,6rem)] leading-[0.88]"} font-medium tracking-[-0.06em] transition-transform duration-500 group-hover:translate-x-2`}>
                     {project.title}
                   </h3>
 
-                  <p className="mt-6 max-w-[600px] text-[clamp(1.4rem,2vw,2.2rem)] leading-[1.05] tracking-[-0.04em] text-white/85">
+                  <p className="max-w-[600px] text-[clamp(1.4rem,2vw,2.2rem)] leading-[1.15] tracking-[-0.04em] text-white/85">
                     {project.tagline}
                   </p>
 
-                  <p className="mt-8 max-w-[540px] font-mono text-[11px] leading-5 text-white/50">
+                  <p className="max-w-[540px] font-mono text-[11px] leading-6 text-white/50">
                     {project.description}
                   </p>
 
-                  <div className="mt-8 flex flex-wrap gap-x-4 gap-y-2">
+                  <div className="flex flex-wrap gap-x-4 gap-y-2">
                     {project.tech.map((tech) => (
                       <span
                         key={tech}
@@ -73,11 +74,21 @@ export default function SelectedWork() {
 
                 {/* Visual placeholder */}
                 <div className="md:col-span-5">
-                  <Link
+                  {project.research ? <ResearchPreview project={project} /> : <Link
                     href={`/projects/${project.slug}`}
                     className="relative block aspect-[4/3] overflow-hidden border border-white/20 bg-white/[0.035]"
                   >
-                    {project.video ? (
+                    {project.image ? (
+                      <div className="absolute inset-x-3 bottom-16 top-12 sm:inset-x-5">
+                        <Image
+                          src={project.image.src}
+                          alt={project.image.alt}
+                          fill
+                          sizes="(max-width: 767px) calc(100vw - 72px), (max-width: 1600px) 42vw, 640px"
+                          className="object-contain transition-transform duration-500 motion-safe:group-hover:scale-[1.02]"
+                        />
+                      </div>
+                    ) : project.video ? (
                       <video
                         src={project.video}
                         className="absolute inset-0 h-full w-full object-contain"
@@ -110,7 +121,7 @@ export default function SelectedWork() {
                     )}
 
                     <div className="absolute left-5 top-5 font-mono text-[9px] uppercase tracking-[0.12em] text-white/35">
-                      Project / {project.number}
+                      Project / {project.number}{project.image?.concept ? " / Concept UI" : ""}
                     </div>
 
                     <div className="absolute right-5 top-5 font-mono text-[9px] text-white/35">
@@ -132,7 +143,7 @@ export default function SelectedWork() {
                     <div className="absolute bottom-5 right-5 text-2xl transition-transform duration-500 group-hover:translate-x-1">
                       ↗
                     </div>
-                  </Link>
+                  </Link>}
                 </div>
               </div>
             </article>
@@ -153,5 +164,27 @@ export default function SelectedWork() {
         </div>
       </div>
     </section>
+  );
+}
+
+function ResearchPreview({ project }: { project: Project }) {
+  const research = project.research!;
+  return (
+    <div className="flex min-h-[360px] flex-col gap-7 border border-white/20 bg-[#f1f0eb] p-7 text-[#111111] sm:p-9">
+      <div className="flex flex-wrap justify-between gap-3 font-mono text-[9px] uppercase tracking-[0.1em] text-black/55"><span className="text-orange-700">Research note / {project.number}</span><span>{research.date}</span></div>
+      <div className="flex flex-col gap-4">
+        <h4 className="text-[clamp(1.8rem,2.5vw,2.8rem)] font-medium leading-[1.08] tracking-[-0.045em]">Forgetting Is a Changepoint</h4>
+        <p className="text-sm leading-6 text-black/65">{research.subtitle}</p>
+      </div>
+      <div className="grid grid-cols-2 gap-5 border-y border-black/15 py-6">
+        <div className="flex flex-col gap-3"><span className="font-mono text-[9px] uppercase tracking-wider text-black/55">Detection rate</span><span className="text-2xl tracking-tight">31.5% <span className="text-orange-700">→ 94.5%</span></span></div>
+        <div className="flex flex-col gap-3"><span className="font-mono text-[9px] uppercase tracking-wider text-black/55">Median delay</span><span className="text-2xl tracking-tight">257 <span className="text-orange-700">→ 35</span></span></div>
+        <p className="col-span-2 font-mono text-[9px] leading-5 text-black/55">Fixed-null e-process → restart e-detector. Permuted-digits benchmark, 200 seeds; delay in SGD steps. Different false-alarm guarantees: horizon-uniform control versus average run length.</p>
+      </div>
+      <div className="flex flex-col gap-4">
+        <p className="text-xs leading-6 text-black/65">Preliminary experiments. At comparable replay budget, triggered replay shows no significant accuracy advantage over periodic replay.</p>
+        {research.pdf ? <a href={research.pdf} download className="w-fit border border-black/30 px-4 py-3 font-mono text-[10px] uppercase tracking-wider hover:bg-black/5 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-orange-600">Download research PDF ↓</a> : <span className="font-mono text-[9px] uppercase tracking-wider text-black/45">PDF coming soon</span>}
+      </div>
+    </div>
   );
 }
