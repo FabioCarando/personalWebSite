@@ -204,7 +204,7 @@ export default function NetworkGraph() {
     };
 
     const getPoint = (node: { x: number; y: number }) => ({
-      x: node.x * width,
+      x: (width < 768 ? 0.08 + ((node.x - 0.31) / 0.66) * 0.84 : node.x) * width,
       y: node.y * height,
     });
 
@@ -304,7 +304,7 @@ export default function NetworkGraph() {
 
       const active = connectionIsActive(connection);
 
-      let opacity = activeNodeId
+      const opacity = activeNodeId
         ? active
           ? 0.65
           : 0.035

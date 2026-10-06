@@ -29,13 +29,11 @@ export default function Hero() {
 
   return (
     <section className="relative min-h-[calc(100vh-81px)] overflow-hidden">
-      {/* Animated neural / knowledge graph */}
-      <NetworkGraph />
-
       {/* Soft fade behind the main typography for readability */}
       <div
         className="
           pointer-events-none
+          hidden md:block
           absolute
           inset-y-0
           left-0
@@ -50,9 +48,9 @@ export default function Hero() {
 
       <div className="page-shell pointer-events-none relative z-20 flex min-h-[calc(100vh-81px)] flex-col">
         {/* Role */}
-        <div className="pt-12 md:pt-16">
-          <div className="label flex items-center gap-3">
-            <span className="block h-px w-6 bg-black/50" />
+        <div className="relative z-10 pt-8 md:pt-16">
+          <div className="label flex items-center gap-3 leading-5">
+            <span className="block h-px w-6 shrink-0 bg-black/50" />
 
             <span>
               DATA SCIENTIST / MACHINE LEARNING ENGINEER
@@ -61,13 +59,13 @@ export default function Hero() {
         </div>
 
         {/* Main content */}
-        <div className="my-auto pb-10 pt-16">
-          <div className="max-w-[760px]">
+        <div className="relative z-10 pb-8 pt-12 md:my-auto md:pb-10 md:pt-16">
+          <div className="flex max-w-[760px] flex-col items-start gap-7 md:gap-8">
             <h1
               className="
-                text-[clamp(4.7rem,9vw,9.5rem)]
+                text-[clamp(3.2rem,13vw,6rem)] md:text-[clamp(4.7rem,9vw,9.5rem)]
                 font-semibold
-                leading-[0.78]
+                leading-[0.9] md:leading-[0.78]
                 tracking-[-0.075em]
               "
             >
@@ -78,11 +76,10 @@ export default function Hero() {
 
             <h2
               className="
-                mt-8
                 max-w-[670px]
-                text-[clamp(1.8rem,3vw,3.6rem)]
+                text-[clamp(1.4rem,5.5vw,2.4rem)] md:text-[clamp(1.8rem,3vw,3.6rem)]
                 font-normal
-                leading-[1]
+                leading-[1.15] md:leading-[1]
                 tracking-[-0.05em]
               "
             >
@@ -91,7 +88,7 @@ export default function Hero() {
               Machine Learning Engineer.
             </h2>
 
-            <p className="mt-8 max-w-[470px] font-mono text-[13px] leading-6 text-black/65">
+            <p className="max-w-[470px] font-mono text-[12px] leading-6 text-black/65 md:text-[13px]">
               I build data products, automation systems and
               AI-powered applications designed to solve real
               problems.
@@ -101,7 +98,6 @@ export default function Hero() {
             href="#selected-work"
             className="
                 pointer-events-auto
-                mt-9
                 inline-flex
                 items-center
                 gap-6
@@ -134,11 +130,17 @@ export default function Hero() {
           </div>
         </div>
 
+        {/* On phones the graph has its own space below the introduction. */}
+        <div className="relative h-[280px] w-full shrink-0 border-t border-black/10 sm:h-[340px] md:absolute md:inset-0 md:z-0 md:h-auto md:border-0">
+          <NetworkGraph />
+        </div>
+
         {/* Footer */}
         <div
           className="
             grid
-            grid-cols-2
+            relative z-10
+            grid-cols-1 gap-4
             items-end
             border-t
             border-black/20
@@ -146,7 +148,7 @@ export default function Hero() {
             font-mono
             text-[10px]
             uppercase
-            md:grid-cols-3
+            sm:grid-cols-2 md:grid-cols-3
           "
         >
           <div className="flex gap-3">
@@ -161,7 +163,7 @@ export default function Hero() {
             Scroll to explore ↓
           </div>
 
-          <div className="text-right">
+          <div className="sm:text-right">
             Building / Exploring / Playing
           </div>
         </div>
