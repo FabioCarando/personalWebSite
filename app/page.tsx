@@ -1,4 +1,5 @@
 import Hero from "@/components/home/Hero";
+import Contact from "@/components/home/Contact";
 import Latest from "@/components/home/Latest";
 import Now from "@/components/home/Now";
 import SelectedWork from "@/components/home/SelectedWork";
@@ -19,6 +20,7 @@ export default function Home() {
       <Latest />
 
       <Now />
+      <Contact />
     </main>
   );
 }

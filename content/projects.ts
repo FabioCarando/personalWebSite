@@ -10,7 +10,16 @@ export type Project = {
   tech: string[];
   video?: string;
   image?: { src: string; alt: string; concept?: boolean };
-  research?: { subtitle: string; date: string; pdf?: string };
+  research?: {
+    title: string;
+    subtitle: string;
+    date?: string;
+    authors?: string;
+    pdf?: string;
+    metrics: { label: string; value: string }[];
+    context: string;
+    note: string;
+  };
 };
 
 export const projects: Project[] = [
@@ -25,13 +34,43 @@ export const projects: Project[] = [
     year: "2026",
     tech: ["Python", "NumPy", "Sequential testing", "Changepoint detection"],
     research: {
+      title: "Forgetting Is a Changepoint",
       subtitle: "Anytime-Valid Retention Monitoring and E-Detector-Triggered Replay in Continual Learning",
       date: "30 September 2026",
       pdf: "/Forgetting%20Is%20a%20Changepoint.pdf",
+      metrics: [
+        { label: "Detection rate", value: "31.5% → 94.5%" },
+        { label: "Median delay", value: "257 → 35" },
+      ],
+      context: "Fixed-null e-process → restart e-detector. Permuted-digits benchmark, 200 seeds; delay in SGD steps. Different false-alarm guarantees: horizon-uniform control versus average run length.",
+      note: "Preliminary experiments. At comparable replay budget, triggered replay shows no significant accuracy advantage over periodic replay.",
     },
   },
   {
     number: "02",
+    slug: "approximate-bayesian-computation",
+    title: "APPROXIMATE BAYESIAN COMPUTATION",
+    eyebrow: "RESEARCH / BAYESIAN INFERENCE",
+    tagline: "Inference through simulation when likelihoods are intractable.",
+    description:
+      "A co-authored study of Approximate Bayesian Computation, covering rejection sampling, MCMC-ABC and sequential Monte Carlo. Includes R experiments for Gaussian parameter estimation, with discussion of summary statistics, tolerance calibration, regression adjustment and model selection.",
+    year: "",
+    tech: ["R", "Bayesian inference", "Monte Carlo", "Simulation"],
+    research: {
+      title: "Approximate Bayesian Computation (ABC)",
+      subtitle: "Likelihood-free inference, algorithm calibration and sequential improvements",
+      authors: "Fabio Carando, Simone Dal Ben, Martina Dotti",
+      pdf: "/ABC%20-%20Approximate%20Bayesian%20Computational%20Method.pdf",
+      metrics: [
+        { label: "Methods discussed", value: "Rejection / MCMC / SMC" },
+        { label: "Numerical example", value: "Gaussian parameters" },
+      ],
+      context: "R implementations compare basic ABC with a sequential approach for estimating a normal distribution's mean and variance, alongside posterior summaries and runtime measurements.",
+      note: "The study discusses the tradeoff between computational effort and approximation quality, including the role of summary statistics, distance measures and tolerance thresholds.",
+    },
+  },
+  {
+    number: "03",
     slug: "trace",
     title: "TRACE",
     eyebrow: "FINTECH / AI",
@@ -44,7 +83,7 @@ export const projects: Project[] = [
     video: "/2026-10-05 15-44-30.mkv",
   },
   {
-    number: "03",
+    number: "04",
     slug: "worklens",
     title: "WORKLENS",
     eyebrow: "AUTOMATION / DATA",
@@ -59,7 +98,7 @@ export const projects: Project[] = [
     },
   },
   {
-    number: "04",
+    number: "05",
     slug: "market-product-intelligence",
     title: "MARKET PRODUCT INTELLIGENCE",
     eyebrow: "DATA ENGINEERING / INTELLIGENCE",
@@ -75,7 +114,7 @@ export const projects: Project[] = [
     },
   },
   {
-    number: "05",
+    number: "06",
     slug: "monteromola",
     title: "SAS per aziende agricole e cantine",
     eyebrow: "AGRITECH / FULL STACK",

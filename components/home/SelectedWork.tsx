@@ -1,4 +1,4 @@
-import Image from "next/image";
+﻿import Image from "next/image";
 import Link from "next/link";
 
 import { projects, type Project } from "@/content/projects";
@@ -171,19 +171,19 @@ function ResearchPreview({ project }: { project: Project }) {
   const research = project.research!;
   return (
     <div className="flex min-h-[360px] flex-col gap-7 border border-white/20 bg-[#f1f0eb] p-7 text-[#111111] sm:p-9">
-      <div className="flex flex-wrap justify-between gap-3 font-mono text-[9px] uppercase tracking-[0.1em] text-black/55"><span className="text-orange-700">Research note / {project.number}</span><span>{research.date}</span></div>
+      <div className="flex flex-wrap justify-between gap-3 font-mono text-[9px] uppercase tracking-[0.1em] text-black/55"><span className="text-orange-700">Research note / {project.number}</span>{research.date && <span>{research.date}</span>}</div>
       <div className="flex flex-col gap-4">
-        <h4 className="text-[clamp(1.8rem,2.5vw,2.8rem)] font-medium leading-[1.08] tracking-[-0.045em]">Forgetting Is a Changepoint</h4>
+        <h4 className="text-[clamp(1.8rem,2.5vw,2.8rem)] font-medium leading-[1.08] tracking-[-0.045em]">{research.title}</h4>
         <p className="text-sm leading-6 text-black/65">{research.subtitle}</p>
+        {research.authors && <p className="font-mono text-[10px] leading-5 text-black/55">{research.authors}</p>}
       </div>
-      <div className="grid grid-cols-2 gap-5 border-y border-black/15 py-6">
-        <div className="flex flex-col gap-3"><span className="font-mono text-[9px] uppercase tracking-wider text-black/55">Detection rate</span><span className="text-2xl tracking-tight">31.5% <span className="text-orange-700">→ 94.5%</span></span></div>
-        <div className="flex flex-col gap-3"><span className="font-mono text-[9px] uppercase tracking-wider text-black/55">Median delay</span><span className="text-2xl tracking-tight">257 <span className="text-orange-700">→ 35</span></span></div>
-        <p className="col-span-2 font-mono text-[9px] leading-5 text-black/55">Fixed-null e-process → restart e-detector. Permuted-digits benchmark, 200 seeds; delay in SGD steps. Different false-alarm guarantees: horizon-uniform control versus average run length.</p>
+      <div className="grid grid-cols-1 gap-5 border-y border-black/15 py-6 sm:grid-cols-2">
+        {research.metrics.map((metric) => <div key={metric.label} className="flex flex-col gap-3"><span className="font-mono text-[9px] uppercase tracking-wider text-black/55">{metric.label}</span><span className="text-xl leading-snug tracking-tight text-orange-700">{metric.value}</span></div>)}
+        <p className="font-mono text-[9px] leading-5 text-black/55 sm:col-span-2">{research.context}</p>
       </div>
       <div className="flex flex-col gap-4">
-        <p className="text-xs leading-6 text-black/65">Preliminary experiments. At comparable replay budget, triggered replay shows no significant accuracy advantage over periodic replay.</p>
-        {research.pdf ? <a href={research.pdf} download className="w-fit border border-black/30 px-4 py-3 font-mono text-[10px] uppercase tracking-wider hover:bg-black/5 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-orange-600">Download research PDF ↓</a> : <span className="font-mono text-[9px] uppercase tracking-wider text-black/45">PDF coming soon</span>}
+        <p className="text-xs leading-6 text-black/65">{research.note}</p>
+        {research.pdf ? <a href={research.pdf} download className="w-fit border border-black/30 px-4 py-3 font-mono text-[10px] uppercase tracking-wider hover:bg-black/5 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-orange-600">Download research PDF &darr;</a> : <span className="font-mono text-[9px] uppercase tracking-wider text-black/45">PDF coming soon</span>}
       </div>
     </div>
   );
