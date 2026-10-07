@@ -1,252 +1,28 @@
-"use client";
+﻿"use client";
 
-import { useEffect, useState } from "react";
+import { COMMUNITY_COLORS, type GraphData, type GraphMode } from "./NeuralNetwork";
 
-import { NeuralGraphData } from "./NeuralNetwork";
-
-const STAGES = [
-  "INPUT",
-  "EMBEDDING",
-  "ATTENTION",
-  "REASONING",
-  "SYNTHESIS",
-  "OUTPUT",
+const MODES: { id: GraphMode; label: string; description: string }[] = [
+  { id: "connections", label: "Connections", description: "Signals travel along edges. Select a node to reveal its immediate neighborhood." },
+  { id: "communities", label: "Communities", description: "Four connected communities. Color reveals the groups; bridges tie the whole network together." },
+  { id: "traversal", label: "Explore / BFS", description: "A breadth-first wave follows the shortest hop distance from your selected node." },
 ];
 
-export default function NeuralHUD({
-  graph,
-}: {
-  graph: NeuralGraphData;
+export default function NeuralHUD({ graph, mode, source, paused, onMode, onPause, onSelect }: {
+  graph: GraphData; mode: GraphMode; source: number; paused: boolean;
+  onMode: (mode: GraphMode) => void; onPause: () => void; onSelect: (source: number) => void;
 }) {
-  const [activeStage, setActiveStage] = useState(0);
-  const [signal, setSignal] = useState(0.847);
-  const [latency, setLatency] = useState(12.4);
-
-  useEffect(() => {
-    const interval = window.setInterval(() => {
-      setActiveStage(
-        (current) => (current + 1) % STAGES.length
-      );
-
-      setSignal(
-        0.72 + Math.random() * 0.24
-      );
-
-      setLatency(
-        9 + Math.random() * 7
-      );
-    }, 1800);
-
-    return () => window.clearInterval(interval);
-  }, []);
-
-  return (
-    <>
-      {/* RIGHT SYSTEM PANEL */}
-
-      <div className="pointer-events-none absolute right-[4vw] top-[22%] z-20 hidden w-[205px] xl:block">
-        <div className="border-l border-white/10 pl-5">
-          <HudTitle>FC / NET 01</HudTitle>
-
-          <HudRow
-            label="Status"
-            value="Inference"
-            orange
-          />
-
-          <HudRow
-            label="Architecture"
-            value="Neural"
-          />
-
-          <HudRow
-            label="Layers"
-            value="06"
-          />
-
-          <HudRow
-            label="Nodes"
-            value={String(graph.nodes.length)}
-          />
-
-          <HudRow
-            label="Edges"
-            value={String(graph.connections.length)}
-          />
-
-          <HudRow
-            label="Signal"
-            value={signal.toFixed(3)}
-          />
-
-          <HudRow
-            label="Latency"
-            value={`${latency.toFixed(1)} ms`}
-          />
-        </div>
-
-        {/* PIPELINE */}
-
-        <div className="mt-10 border-l border-white/10 pl-5">
-          <HudTitle>Process</HudTitle>
-
-          <div className="space-y-3">
-            {STAGES.map((stage, index) => {
-              const completed = index < activeStage;
-              const active = index === activeStage;
-
-              return (
-                <div
-                  key={stage}
-                  className="grid grid-cols-[20px_1fr_10px] items-center font-mono text-[7px] uppercase tracking-[0.12em]"
-                >
-                  <span className="text-white/20">
-                    {String(index + 1).padStart(2, "0")}
-                  </span>
-
-                  <span
-                    className={
-                      active
-                        ? "text-white/80"
-                        : "text-white/30"
-                    }
-                  >
-                    {stage}
-                  </span>
-
-                  <span
-                    className={
-                      active
-                        ? "text-orange-500"
-                        : completed
-                          ? "text-white/45"
-                          : "text-white/15"
-                    }
-                  >
-                    {active
-                      ? "●"
-                      : completed
-                        ? "✓"
-                        : "○"}
-                  </span>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-
-        {/* ACTIVITY */}
-
-        <div className="mt-10 border-l border-white/10 pl-5">
-          <HudTitle>Neural activity</HudTitle>
-
-          <ActivityBars activeStage={activeStage} />
-        </div>
-      </div>
-
-      {/* CENTER STAGE */}
-
-      <div className="pointer-events-none absolute bottom-[100px] left-1/2 z-20 hidden -translate-x-1/2 md:block">
-        <div className="text-center">
-          <div className="font-mono text-[7px] uppercase tracking-[0.18em] text-white/20">
-            Active stage
-          </div>
-
-          <div className="mt-2 font-mono text-[9px] uppercase tracking-[0.2em] text-orange-500">
-            {STAGES[activeStage]}
-          </div>
-        </div>
-      </div>
-    </>
-  );
-}
-
-function HudTitle({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
-  return (
-    <div className="mb-5 font-mono text-[7px] uppercase tracking-[0.18em] text-white/20">
-      {children}
+  return <div className="relative border-t border-white/15 pt-5">
+    <div className="flex flex-wrap items-center gap-2">
+      {MODES.map((item) => <button key={item.id} type="button" aria-pressed={mode === item.id} onClick={() => onMode(item.id)} className={`border px-3 py-2.5 font-mono text-[9px] uppercase tracking-wider transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-orange-500 ${mode === item.id ? "border-orange-500/60 bg-orange-500/10 text-orange-400" : "border-white/15 text-white/50 hover:border-white/40 hover:text-white"}`}>{item.label}</button>)}
+      <button type="button" onClick={onPause} aria-pressed={paused} aria-label={paused ? "Resume graph animation" : "Pause graph animation"} className="ml-auto px-2 py-2.5 font-mono text-[9px] uppercase tracking-wider text-white/60 focus-visible:outline-2 focus-visible:outline-orange-500">{paused ? "Play +" : "Pause II"}</button>
     </div>
-  );
-}
-
-function HudRow({
-  label,
-  value,
-  orange = false,
-}: {
-  label: string;
-  value: string;
-  orange?: boolean;
-}) {
-  return (
-    <div className="mb-3 flex justify-between gap-4 font-mono text-[7px] uppercase tracking-[0.1em]">
-      <span className="text-white/25">
-        {label}
-      </span>
-
-      <span
-        className={
-          orange
-            ? "text-orange-500"
-            : "text-white/65"
-        }
-      >
-        {value}
-      </span>
+    <p className="mt-4 min-h-10 max-w-lg text-xs leading-5 text-white/50">{MODES.find((item) => item.id === mode)?.description}</p>
+    <div className="mt-4 flex flex-wrap items-center justify-between gap-4 font-mono text-[9px] uppercase tracking-wider text-white/45">
+      <span>{graph.nodes.length} nodes / {graph.edges.length} edges</span>
+      <label className="flex items-center gap-2">Source <select aria-label="Select graph source node" value={source} onChange={(event) => onSelect(Number(event.target.value))} className="rounded-none border border-white/20 bg-[#111111] p-2 text-orange-400 focus-visible:outline-orange-500">{graph.nodes.map((node) => <option key={node.id} value={node.id}>N{String(node.id).padStart(3, "0")}</option>)}</select></label>
+      <span aria-live="polite">Degree {graph.nodes[source].neighbors.length} / Group {graph.nodes[source].community + 1}</span>
     </div>
-  );
+    {mode === "communities" && <div className="mt-4 flex flex-wrap gap-4 font-mono text-[9px] text-white/60">{COMMUNITY_COLORS.map((color, index) => <span key={color} className="flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full" style={{ background: color }} />Community {index + 1}</span>)}</div>}
+  </div>;
 }
-
-function ActivityBars({
-  activeStage,
-}: {
-  activeStage: number;
-}) {
-  const bars = [
-    22,
-    42,
-    64,
-    38,
-    82,
-    55,
-    92,
-    68,
-    45,
-    78,
-    58,
-    88,
-  ];
-
-  return (
-    <div className="flex h-[38px] items-end gap-[3px]">
-      {bars.map((height, index) => {
-        const boost =
-          (index + activeStage * 2) % 5 === 0
-            ? 8
-            : 0;
-
-        return (
-          <div
-            key={index}
-            className={
-              index === activeStage * 2
-                ? "w-[3px] bg-orange-500/70"
-                : "w-[3px] bg-white/20"
-            }
-            style={{
-              height: `${Math.min(
-                100,
-                height + boost
-              )}%`,
-            }}
-          />
-        );
-      })}
-    </div>
-  );
-}
-
