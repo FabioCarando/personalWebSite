@@ -1,5 +1,6 @@
 import { contact } from "@/content/contact";
 import ContactForm from "@/components/contact/ContactForm";
+import Image from "next/image";
 
 export default function Contact() {
   return (
@@ -11,10 +12,27 @@ export default function Contact() {
         </div>
         <div className="grid items-start gap-12 border-t border-white/20 pt-10 lg:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)] lg:gap-16">
           <ContactForm />
-          <div className="grid min-w-0 gap-9 sm:grid-cols-2 lg:grid-cols-1">
+          <div className="flex min-w-0 flex-col gap-10">
+            <figure className="flex items-center gap-5 border-b border-white/15 pb-8 sm:gap-7">
+              <div className="relative aspect-[4/5] w-[120px] shrink-0 overflow-hidden border border-white/15 sm:w-[144px]">
+                <Image
+                  src="/foto%20fabio%20professionale.png"
+                  alt="Portrait of Fabio Carando"
+                  fill
+                  sizes="(max-width: 639px) 120px, 144px"
+                  className="object-cover object-[center_35%]"
+                />
+              </div>
+              <figcaption className="flex min-w-0 flex-col gap-3">
+                <span className="text-xl font-medium leading-snug tracking-tight sm:text-2xl">Fabio Carando</span>
+                <span className="text-sm leading-6 text-white/55">Data Scientist &amp;<br />Machine Learning Engineer</span>
+              </figcaption>
+            </figure>
+            <div className="grid min-w-0 gap-9 sm:grid-cols-2 lg:grid-cols-1">
           {contact.phones.map((phone) => <ContactLink key={phone.label} label={phone.label} text={phone.display} href={phone.href} />)}
           <ContactLink label="GitHub" text="github.com/FabioCarando" href={contact.github} />
           {contact.linkedin && <ContactLink label="LinkedIn" text="Fabio Carando" href={contact.linkedin} />}
+            </div>
           </div>
         </div>
       </div>
